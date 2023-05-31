@@ -1017,6 +1017,7 @@ body {
   max-width: 100%;
 }
 .header__icon {
+  cursor: pointer;
   flex: 0 0 3.125rem;
   width: 3.125rem;
   height: 2.1875rem;
