@@ -9,30 +9,11 @@ window.addEventListener("load", pageLoad)
 window.addEventListener('click', windowClick)
 window.addEventListener("scroll", detectScrollDerection)
 
-function checkBrowser() {
+ 
 
     // Get the user-agent string
-    let userAgentString =
-        navigator.userAgent;
-
-    // Detect Chrome
-    let chromeAgent =
-        userAgentString.indexOf("Chrome") > -1;
-
-    // Detect Safari
-    let safariAgent =
-        userAgentString.indexOf("Safari") > -1;
-
-    // Discard Safari since it also matches Chrome
-    if ((chromeAgent) && (safariAgent)){
-        safariAgent = false;
-    }
-    if(safariAgent){
-        console.log("ssdgsdg")
-        htmlElement.classList.add("safari")
-    }
         
-}
+
 
 
 let oldScroll = 0;
@@ -84,7 +65,6 @@ function pageLoad(e) {
         htmlElement.classList.add("loaded");
     }, 200);
 
-    checkBrowser();
     crossPagesLink();
     showActivePunkt();
 
