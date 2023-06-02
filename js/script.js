@@ -9,11 +9,30 @@ window.addEventListener("load", pageLoad)
 window.addEventListener('click', windowClick)
 window.addEventListener("scroll", detectScrollDerection)
 
- 
+function checkBrowser() {
 
     // Get the user-agent string
-        
+    let userAgentString =
+        navigator.userAgent;
 
+    // Detect Chrome
+    let chromeAgent =
+        userAgentString.indexOf("Chrome") > -1;
+
+    // Detect Safari
+    let safariAgent =
+        userAgentString.indexOf("Safari") > -1;
+
+    // Discard Safari since it also matches Chrome
+    if ((chromeAgent) && (safariAgent)) {
+        safariAgent = false;
+    }
+    if (safariAgent) {
+        console.log("ssdgsdg")
+        htmlElement.classList.add("safari")
+    }
+
+}
 
 
 let oldScroll = 0;
@@ -65,6 +84,7 @@ function pageLoad(e) {
         htmlElement.classList.add("loaded");
     }, 200);
 
+    checkBrowser();
     crossPagesLink();
     showActivePunkt();
 
@@ -75,7 +95,10 @@ function pageLoad(e) {
                 if (entry.isIntersecting) {
                     {
                         targetElement.classList.add("observed")
-                        console.log(targetElement)
+                        const counterElements = targetElement.querySelectorAll('[data-counter]');
+                        if (counterElements.length) {
+                            counterInit(counterElements)
+                        }
                     }
                 } else {
                     if (targetElement.classList.contains("repeat-animation")) {
@@ -91,11 +114,13 @@ function pageLoad(e) {
         }
         let observer = new IntersectionObserver(callback, options)
 
+
         let animElements = document.querySelectorAll(".animation")
         animElements.forEach(animElement => {
             observer.observe(animElement)
         })
     }, 200);
+
 }
 
 function windowClick(e) {
@@ -144,4 +169,34 @@ function detectScrollDerection() {
     }
 
     oldScroll = window.scrollY;
+}
+
+function counterInit(counterItems) {
+    let counters = counterItems ? counterItems : document.querySelectorAll('[data-counter]');
+    if (counters) {
+        counters.forEach(counter => {
+            counterAnimate(counter)
+            counter.classList.add("counted")
+        })
+    }
+}
+
+function counterAnimate(item) {
+    if(!item.classList.contains("counted")){
+        const animDuration = item.getAttribute("dataAnimDuration") || 2000;
+        const number = item.dataset.number;
+    
+        const iterationTime = animDuration / number;
+        console.log(number)
+    
+        let i = 1;
+        let int = setInterval(() => {
+            if (i < number) {
+                i++;
+                item.textContent = i;
+            } else{
+                clearInterval(int)
+            }
+        }, iterationTime)
+    }
 }
