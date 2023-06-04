@@ -203,17 +203,6 @@ button {
 .stats-info__stat {
   text-align: center;
 }
-@media (max-width: 37.49875em) {
-  .stats-info__stat {
-    transform: translate(-75%, 0);
-    opacity: 0;
-    transition: opacity 0.15s, transform 0.3s;
-  }
-  .stats-info__stat.observed {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-}
 .stats-info__quantity {
   font-size: 3.25rem;
   line-height: 1.6;

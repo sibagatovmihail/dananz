@@ -1,12 +1,12 @@
 "use strict"
 
 const htmlElement = document.documentElement;
-let loc = document.location;
+const loc = document.location;
 const pathanme = loc.pathname;
 
 
 window.addEventListener("load", pageLoad)
-window.addEventListener('click', windowClick)
+document.addEventListener('click', windowClick)
 window.addEventListener("scroll", detectScrollDerection)
 
 function checkBrowser() {
@@ -28,7 +28,6 @@ function checkBrowser() {
         safariAgent = false;
     }
     if (safariAgent) {
-        console.log("ssdgsdg")
         htmlElement.classList.add("safari")
     }
 
@@ -40,7 +39,7 @@ const tippyTexts = document.querySelectorAll(".tippy-text")
 const menuLinks = document.querySelectorAll(".nav-header__link")
 
 
-if (tippyTexts) {
+if (tippyTexts.length) {
     tippyTexts.forEach(tippyText => {
         let symbolsQuantity = tippyText.getAttribute("data-character-quantity");
 
@@ -67,9 +66,6 @@ if (tippyTexts) {
                 if (tippyText.classList.contains("showed")) {
                     tippyText.innerText = displayText + moreText;
                     tippyText.insertAdjacentHTML("beforeend", "<div class='dots showed'>Hide</div>")
-
-                    console.log(displayText.length + moreText.length)
-                    console.log(tippyText.innerText.length)
                 } else {
                     tippyText.innerText = displayText;
                     tippyText.insertAdjacentHTML("beforeend", "<div class='dots'>...</div>");
@@ -165,14 +161,13 @@ function detectScrollDerection() {
         htmlElement.classList.add("down")
     } else {
         htmlElement.classList.remove("down")
-        // htmlElement.classList.add("up")
     }
 
     oldScroll = window.scrollY;
 }
 
 function counterInit(counterItems) {
-    let counters = counterItems ? counterItems : document.querySelectorAll('[data-counter]');
+    let counters = counterItems;
     if (counters) {
         counters.forEach(counter => {
             counterAnimate(counter)
@@ -183,17 +178,15 @@ function counterInit(counterItems) {
 
 function counterAnimate(item) {
     if(!item.classList.contains("counted")){
-        const animDuration = item.getAttribute("dataAnimDuration") || 2000;
+        const animDuration = item.getAttribute("data-anim-duration") || 2000;
         const number = item.dataset.number;
     
         const iterationTime = animDuration / number;
-        console.log(number)
     
         let i = 1;
         let int = setInterval(() => {
             if (i < number) {
-                i++;
-                item.textContent = i;
+                item.textContent = ++i;
             } else{
                 clearInterval(int)
             }
